@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1><%= title %></h1>
+    <form class="" action="/users/userupdate" method="post">
+      <input type="hidden" name="id" value="<%= user._id %>">
+      <label for="name">Name:</label>
+      <input type="text" name="name" id="name" value="<%= user.name %> "> <p>
+
+      <label for="email">Email:</label>
+      <input type="text" name="email" id="email" value="<%= user.email %> "><p>
+
+      <label for="password">Password:</label>
+      <input type="password" name="password" id="password" value="<%= user.password %>"><p>
+
+      <input type="submit" name="submit" value="submit">
+
+    </form>
+  </body>
+</html>

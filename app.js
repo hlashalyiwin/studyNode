@@ -2,6 +2,7 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
+var session = require('express-session');
 var logger = require('morgan');
 var mongoose = require('mongoose');
 
@@ -20,11 +21,30 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-mongoose.connect('mongodb://127.0.0.1/study');
+mongoose.connect('mongodb+srv://hlashalyiwin:hlashalyiwin@studynote-w2ez4.mongodb.net/test?retryWrites=true');
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
+app.use(session({
+  secret: 'HlaShalyiWin1998',
+  resave: false,
+  saveUninitialized: true
+}));
+
+app.use(function (req,res, next){
+  res.locals.user = req.session.user;
+  next();
+})
+
 app.use('/', indexRouter);
+app.use(function (req,res, next){
+  if(req.session.user){
+    next()
+  }
+  else{
+    res.redirect('/signin');
+  }
+})
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler
